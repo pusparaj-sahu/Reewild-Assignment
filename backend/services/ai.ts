@@ -50,8 +50,8 @@ export async function inferIngredientsFromDish(dish: string): Promise<Ingredient
   try {
     console.log(`🔍 Gemini: Processing dish "${dish}"`);
     const genAI = getGeminiInstance();
-    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-1.5-pro' });
-    console.log(`🤖 Using model: ${process.env.GEMINI_MODEL || 'gemini-1.5-pro'}`);
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-2.5-pro' });
+    console.log(`🤖 Using model: ${process.env.GEMINI_MODEL || 'gemini-2.5-pro'}`);
     
     const prompt = `You are a culinary expert. Return ONLY a JSON array with 12-30 items. Each item must be {"ingredient": string, "weight_g": number}. Use common global English names, lowercase, and estimate realistic grams per single serving. Include spices, oils, herbs and common add-ons when typical. No explanations or markdown. Dish: ${dish}.`;
     console.log(`📝 Gemini: Sending prompt for ${dish}`);
@@ -86,7 +86,10 @@ export async function inferIngredientsFromDish(dish: string): Promise<Ingredient
 export async function inferIngredientsFromImage(file: Express.Multer.File): Promise<{ dish: string; ingredients: Ingredient[] }> {
   try {
     const genAI = getGeminiInstance();
-    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-1.5-pro' });
+    // Use gemini-1.5-pro for image processing as it has better vision capabilities
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    console.log(`🤖 Using model: gemini-1.5-pro for image processing`);
+    
     const base64 = file.buffer.toString('base64');
     const input = [
       {

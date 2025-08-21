@@ -125,10 +125,11 @@ function App() {
                 accept="image/*"
                 onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
                 className="file-input"
+                id="image-upload"
               />
-              <span className="file-label">
+              <label htmlFor="image-upload" className="file-label">
                 {imageFile ? imageFile.name : 'Choose an image file'}
-              </span>
+              </label>
             </div>
             <div className="servings-group">
               <label htmlFor="servings-image">Servings:</label>
